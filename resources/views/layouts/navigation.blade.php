@@ -58,6 +58,12 @@
                                 Profile
                             </x-dropdown-link>
 
+                            @if (auth()->user()->hasAdministrativeAccess())
+                                <x-dropdown-link :href="route('filament.admin.pages.dashboard')">
+                                    Admin Area
+                                </x-dropdown-link>
+                            @endif
+
                             <!-- Authentication -->
                             <form
                                 method="POST"
@@ -148,6 +154,12 @@
                     <x-responsive-nav-link :href="route('profile.edit')">
                         Profile
                     </x-responsive-nav-link>
+
+                    @if (auth()->user()->hasAdministrativeAccess())
+                        <x-responsive-nav-link :href="route('filament.admin.pages.dashboard')">
+                            Admin Area
+                        </x-responsive-nav-link>
+                    @endif
 
                     <!-- Authentication -->
                     <form

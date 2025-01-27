@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use App\Role;
+use Database\Factories\UserFactory;
+use Exception;
+use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -13,7 +16,7 @@ use Illuminate\Notifications\Notifiable;
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+    /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
     /**
@@ -38,6 +41,23 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'remember_token',
     ];
+
+    public function hasAdministrativeAccess(): bool
+    {
+        return $this->role === Role::ADMINISTRATOR;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function canAccessPanel(Panel $panel): bool
+    {
+        if ($panel->getId() === 'admin') {
+            return $this->hasAdministrativeAccess();
+        }
+
+        return true;
+    }
 
     /**
      * Get the attributes that should be cast.
