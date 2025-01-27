@@ -4,17 +4,22 @@
     "scripts": {
         "build": "vite build",
         "dev": "vite",
-        "format:check": "prettier --check --ignore-unknown .",
         "format": "prettier --write --ignore-unknown .",
+        "format:check": "prettier --check --ignore-unknown .",
+        "lint": "eslint",
+        "lint:fix": "eslint --fix",
         "prepare": "husky || true"
     },
     "devDependencies": {
+        "@eslint/js": "^9.19.0",
         "@shufo/prettier-plugin-blade": "^1.15.2",
         "@tailwindcss/forms": "^0.5.2",
         "alpinejs": "^3.4.2",
         "autoprefixer": "^10.4.2",
         "axios": "^1.7.4",
         "concurrently": "^9.0.1",
+        "eslint": "^9.19.0",
+        "globals": "^15.14.0",
         "husky": "^9.1.7",
         "laravel-vite-plugin": "^1.0",
         "lint-staged": "^15.4.3",
