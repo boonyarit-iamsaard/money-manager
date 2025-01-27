@@ -2,12 +2,14 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
+use App\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends Factory<User>
  */
 class UserFactory extends Factory
 {
@@ -17,19 +19,45 @@ class UserFactory extends Factory
     protected static ?string $password;
 
     /**
+     * Counter for generating sequential user numbers
+     */
+    protected static int $totalCount = 0;
+
+    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
     public function definition(): array
     {
+        self::$totalCount++;
+
+        $paddingLength = strlen((string) $this->count);
+        $paddedSequence = str_pad((string) self::$totalCount, $paddingLength, '0', STR_PAD_LEFT);
+
+        $firstUser = self::$totalCount === 1;
+        $name = $firstUser ? 'Admin' : "User-{$paddedSequence}";
+        $email = $firstUser ? 'admin@example.com' : "user-{$paddedSequence}@example.com";
+        $role = $firstUser ? Role::ADMINISTRATOR->value : Role::USER->value;
+
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'name' => $name,
+            'email' => $email,
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'role' => $role,
+            'password' => Hash::make(static::$password ?? 'password'),
             'remember_token' => Str::random(10),
         ];
+    }
+
+    /**
+     * Set the password that should be used for the users.
+     */
+    public function password(string $password): static
+    {
+        static::$password = $password;
+
+        return $this;
     }
 
     /**
