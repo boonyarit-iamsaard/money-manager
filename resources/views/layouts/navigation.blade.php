@@ -65,6 +65,7 @@
                             @endif
 
                             <!-- Authentication -->
+                            {{-- TODO: deprecate this in favor of filament.user.auth.logout --}}
                             <form
                                 method="POST"
                                 action="{{ route('logout') }}"
@@ -84,7 +85,7 @@
                 </div>
             @else
                 <div class="hidden sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('login')">
+                    <x-nav-link :href="route('filament.user.auth.login')">
                         Login
                     </x-nav-link>
                 </div>
@@ -162,6 +163,7 @@
                     @endif
 
                     <!-- Authentication -->
+                    {{-- TODO: deprecate this in favor of filament.user.auth.logout --}}
                     <form
                         method="POST"
                         action="{{ route('logout') }}"
@@ -181,7 +183,7 @@
         @else
             <div class="border-t border-gray-200 pb-1 pt-4 dark:border-gray-600">
                 <div class="px-4">
-                    <x-nav-link :href="route('login')">
+                    <x-nav-link :href="route('filament.user.auth.login')">
                         Login
                     </x-nav-link>
                 </div>
