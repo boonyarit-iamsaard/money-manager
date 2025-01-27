@@ -69,6 +69,14 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * @return HasMany<Wallet, covariant User>
+     */
+    public function wallets(): HasMany
+    {
+        return $this->hasMany(Wallet::class);
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
