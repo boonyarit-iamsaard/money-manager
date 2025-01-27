@@ -17,6 +17,34 @@ namespace App\Models{
  *
  * @property int $id
  * @property string $name
+ * @property string $slug
+ * @property int $user_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\TFactory|null $use_factory
+ * @property-read \App\Models\User $user
+ * @method static \Database\Factories\BookFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Book newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Book newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Book query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Book whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Book whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Book whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Book whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Book whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Book whereUserId($value)
+ * @mixin \Eloquent
+ */
+	#[\AllowDynamicProperties]
+	class IdeHelperBook {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property string $name
  * @property string $email
  * @property string|null $image
  * @property \App\Role $role
@@ -25,6 +53,8 @@ namespace App\Models{
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Book> $books
+ * @property-read int|null $books_count
  * @property-read \App\Models\TFactory|null $use_factory
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
