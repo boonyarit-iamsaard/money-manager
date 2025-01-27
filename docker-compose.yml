@@ -1,0 +1,43 @@
+services:
+    mailpit:
+        container_name: money-manager-mailpit
+        image: axllent/mailpit
+        restart: unless-stopped
+        volumes:
+            - mailpitdata:/data
+        ports:
+            - "8025:8025"
+            - "1025:1025"
+        environment:
+            MP_MAX_MESSAGES: 5000
+            MP_DATABASE: /data/mailpit.db
+            MP_SMTP_AUTH_ACCEPT_ANY: 1
+            MP_SMTP_AUTH_ALLOW_INSECURE: 1
+        networks:
+            - money-manager-network
+
+    mysql:
+        container_name: money-manager-mysql
+        image: mysql:8.0
+        restart: unless-stopped
+        volumes:
+            - mysqldata:/var/lib/mysql
+        ports:
+            - ${DB_PORT}:${DB_PORT}
+        environment:
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+        networks:
+            - money-manager-network
+
+volumes:
+    mailpitdata:
+        name: money-manager-mailpitdata
+    mysqldata:
+        name: money-manager-mysqldata
+
+networks:
+    money-manager-network:
+        name: money-manager
